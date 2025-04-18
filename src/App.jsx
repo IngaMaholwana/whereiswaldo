@@ -1,42 +1,133 @@
-import { useState } from 'react'
-import React from 'react';
-import BackgroundImg from ' ./src/component/BackgroundImg';
-import bgImage from './assets/waldo.jpg'; // make sure you have a file here
+import MousePosition from "./components/MousePosition";
+import { useState, useEffect, useRef } from "react";
+import Timer from "./components/Timer";
+import NetworkError from "./components/NetworkError";
+import HighScore from "./components/HighScore";
+import NameInput from "./components/NameInput";
+import useGameTimer from "./hooks/useGameTimer";
+import useHighScores from "./hooks/useHighScores";
+import DifficultyButtons from "./components/DifficultyButtons";
 
-const App = () => {
-  const handleChange = (e) => {
-    console.log("Image clicked at:", e.clientX, e.clientY);
+function App() {
+  const [playState, setPlayState] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+
+  const [name, setName] = useState("");
+
+  const [difficulty, setDifficulty] = useState(1);
+
+  const nameModal = useRef(null);
+
+  const url = import.meta.env.VITE_API_URL;
+
+  const {
+    startTime,
+    elapsedTime,
+    error: timerError,
+    loading: timerLoading,
+    endTimer,
+    timerId,
+  } = useGameTimer(url, playState, gameOver);
+
+  const {
+    highScores,
+    highestScore,
+    error: highScoreError,
+    loading: highScoreLoading,
+    submitScore,
+    isScoreSubmitted,
+  } = useHighScores(url, difficulty, gameOver);
+
+  const handleClick = () => {
+    setPlayState(true);
+  };
+
+  const handleGameOver = () => {
+    setGameOver(true);
+    endTimer();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (name) {
+      submitScore(name, timerId); //uses timerID instead of elapsedTime for added security
+    }
+  };
+
+  useEffect(() => {
+    if (
+      gameOver &&
+      elapsedTime &&
+      highestScore &&
+      elapsedTime < highestScore &&
+      !isScoreSubmitted
+    ) {
+      nameModal.current?.showModal();
+    }
+  }, [elapsedTime, highestScore, gameOver, isScoreSubmitted]);
+
+  const hasError = timerError || highScoreError;
+  const isLoading = timerLoading || highScoreLoading;
+
+  const resetGame = () => {
+    window.location.reload();
   };
 
   return (
-    <div className="App">
-      <h1>Our First Test</h1>
-      <BackgroundImg
-        src={bgImage}
-        setImgSize={() => {}}
-        setXY={() => {}}
-        handleChange={handleChange}
-        correctCoords={{ x: 0, y: 0 }} // dummy value for now
-      />
+    <div className="wrapper">
+      <h2>Where&apos;s Waldo?</h2>
+      {!playState ? (
+        <>
+          <button onClick={handleClick}>Play</button>
+          <p>Select difficulty:</p>
+          <DifficultyButtons
+            difficulty={difficulty}
+            setDifficulty={setDifficulty}
+          />
+        </>
+      ) : hasError ? (
+        <NetworkError />
+      ) : isLoading ? (
+        <p>Loading...</p>
+      ) : gameOver ? (
+        <div className="game-over">
+          <h3 className="game-over-text">Game Over!</h3>
+          <div className="final-time">
+            <p>Your time was:</p> <Timer time={elapsedTime} />
+          </div>
+
+          <NameInput
+            nameModal={nameModal}
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
+
+          <div className="high-scores">
+            <h3>High Scores:</h3>
+            <HighScore
+              highScoreData={highScores}
+              name={name}
+              submitState={isScoreSubmitted}
+              elapsedTime={elapsedTime}
+            />
+          </div>
+
+          <button onClick={resetGame}>Play again?</button>
+        </div>
+      ) : (
+        <>
+          <MousePosition
+            url={url}
+            handleGameOver={handleGameOver}
+            time={startTime}
+            difficulty={difficulty}
+            playState={playState}
+          />
+        </>
+      )}
     </div>
   );
-};
+}
 
 export default App;
-// import './App.css'
-
-// const App = () => <h1>Our First Test</h1>;
-
-// export default App;
-
-// function App() {
-  
-
-//   return (
-//     <>
-      
-//     </>
-//   )
-// }
-
-// export default App

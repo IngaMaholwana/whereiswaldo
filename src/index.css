@@ -1,68 +1,184 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
-  margin: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: 600;
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 10px,
+    rgb(255, 225, 225) 10px,
+    rgb(253, 200, 200) 20px
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  background-attachment: fixed;
+  margin-bottom: 2rem;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: black solid 2px;
+  border-radius: 4px;
+  min-width: 50vw;
+  padding: 0 2vw;
+  padding-bottom: 2vw;
+  box-shadow: 0.75rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.image {
+  position: relative;
+}
+
+.active {
+  display: block;
+  position: absolute;
+}
+
+.background {
+  max-width: 90vw;
+  border: 2px solid black;
+  height: auto;
+}
+
+.modalDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.modal {
+  padding: 0;
+  margin: 0;
+  border-radius: 8px;
+}
+
+.checkmark img {
+  border: 2px solid white;
+  border-radius: 24px;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 16px;
+  flex-wrap: wrap;
+}
+
+.new {
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.game-over,
+.input-field,
+.high-scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.final-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 8px;
+}
+
+input {
+  border-radius: 4px;
+  margin: 4px 0;
+  margin-bottom: 12px;
+  width: 100%;
+  padding: 12px 20px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border: 1px solid black;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  width: 100%;
+  background-color: #af4c4c;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  box-shadow: black 0.25rem 0.25rem;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover,
+.selected {
+  background-color: #7e3636;
+}
+
+h3 {
+  margin: 0;
+  margin-top: 8px;
+}
+
+.high-scores {
+  padding: 0 16px;
+  border: solid black 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0.25rem 0.25rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.game-over-text {
+  font-family: cursive;
+  font-size: 2rem;
+}
+
+p {
+  text-align: center;
+}
+
+.difficulty-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 1rem;
+}
+
+.character-portraits {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.character-portrait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.character-portraits img {
+  height: 3rem;
+  max-width: 90%;
+  border: 1px solid black;
 }
