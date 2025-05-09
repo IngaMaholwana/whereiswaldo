@@ -1,3 +1,5 @@
+const VITE_API_URL = "https://github.com/IngaMaholwana/waldo-api";
+
 export const apiGet = async (url) => {
   const response = await fetch(url);
   if (!response.ok) {
