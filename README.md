@@ -2,7 +2,7 @@
 
 A photo tagging app using React frontend and Rails backend.
 
-THIS IS THE SPOT FOR WHEN DEPLOYED AND CREDITING MY API
+The waldo api: https://github.com/IngaMaholwana/waldo-api
 
 ## Features
 
@@ -36,6 +36,4 @@ THIS IS THE SPOT FOR WHEN DEPLOYED AND CREDITING MY API
 - Had to manually reseed database on live server to get updated position for Wizard on Easy map
 - Added character portraits to identify characters and added feature to dynamically check off when found
 
-### To Do
 
-- Checkmarks look weird on Easy and Medium maps
